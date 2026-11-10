@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<title>Faraday Auto · запись</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="../img/logo.png">
+<script src="https://telegram.org/js/telegram-web-app.js?59"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Jost:wght@300&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3f3f0;--surface:#fff;--ink:#0c0d0e;--muted:#676b71;--line:#e2e2dd;--chip:#ececE8;--on:#0c0d0e;--on-ink:#fff;--danger:#c8372d;--ok:#1f7a4d;--r:20px;--ease:cubic-bezier(.22,1,.36,1);color-scheme:light}
+:root[data-theme="dark"]{--bg:#0b0c0d;--surface:#16181b;--ink:#f1f1ee;--muted:#9a9ea4;--line:#26292d;--chip:#1e2124;--on:#f1f1ee;--on-ink:#0b0c0d;color-scheme:dark}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{background:var(--bg);color:var(--ink);font:400 16px/1.5 Manrope,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overscroll-behavior:none}
+body{min-height:100svh;padding-bottom:calc(96px + env(safe-area-inset-bottom))}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;user-select:none;-webkit-user-select:none}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+.screen{display:none;padding:16px;animation:in .4s var(--ease)}
+.screen.on{display:block}
+@keyframes in{from{opacity:0;transform:translateY(10px)}}
+.eyebrow{font:300 12px/1.2 Jost,sans-serif;letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
+h1{font-size:30px;line-height:1.05;letter-spacing:-.03em;font-weight:700}
+h2{font-size:24px;line-height:1.15;letter-spacing:-.02em;font-weight:700}
+.hint{color:var(--muted);font-size:15px;margin-top:6px}
+
+/* главная */
+[hidden]{display:none!important}
+.hero{position:relative;border-radius:24px;overflow:hidden;color:#fff;min-height:340px;padding-top:80px!important;display:flex;flex-direction:column;justify-content:flex-end;padding:20px;background:#0c0d0e}
+.hero img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,9,10,.5) 0%,rgba(8,9,10,.66) 32%,rgba(8,9,10,.96) 72%)}
+.hero img.bg{filter:brightness(.82)}
+.hero h1,.hero p,.hero .eyebrow{text-shadow:0 1px 2px rgba(0,0,0,.35),0 4px 24px rgba(0,0,0,.45)}
+.hero>*{position:relative;z-index:2}
+.hero::after{z-index:1}
+.hero>img.bg{position:absolute;z-index:0}
+.hero .logo{position:absolute;top:16px;left:16px;width:44px;height:44px;border-radius:50%}
+.hero .eyebrow{color:#fff;opacity:.9;margin-bottom:10px}
+.hero p{color:rgba(255,255,255,.94);font-size:15px;font-weight:500;margin-top:8px}
+.beam{height:1px;background:rgba(255,255,255,.2);margin-top:16px;position:relative;overflow:hidden}
+.beam::after{content:"";position:absolute;inset:0 auto 0 -40%;width:40%;background:linear-gradient(90deg,transparent,#fff,transparent);animation:beam 4s var(--ease) infinite}
+@keyframes beam{to{left:100%}}
+.big{width:100%;height:58px;border-radius:18px;background:var(--on);color:var(--on-ink);font-weight:700;font-size:17px;display:flex;align-items:center;justify-content:center;gap:10px;margin-top:14px;transition:transform .2s}
+.big:active{transform:scale(.98)}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.tile{background:var(--surface);border-radius:var(--r);padding:16px;min-height:96px;display:flex;flex-direction:column;justify-content:space-between;text-align:left;transition:transform .2s}
+.tile:active{transform:scale(.98)}
+.tile svg{width:22px;height:22px}
+.tile b{font-size:15px;font-weight:600}
+.tile small{display:block;color:var(--muted);font-size:13px;margin-top:2px}
+.facts{margin-top:10px;background:var(--surface);border-radius:var(--r);padding:4px 16px}
+.facts div{display:flex;justify-content:space-between;gap:12px;padding:13px 0;border-bottom:1px solid var(--line);font-size:15px}
+.facts div:last-child{border:0}
+.facts span:last-child{font-weight:700;white-space:nowrap}
+
+/* шаги */
+.top{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.back{width:40px;height:40px;border-radius:50%;background:var(--surface);display:grid;place-items:center;flex:none}
+.back svg{width:18px;height:18px}
+.prog{flex:1;height:4px;border-radius:4px;background:var(--line);overflow:hidden}
+.prog i{display:block;height:100%;background:var(--ink);width:25%;transition:width .45s var(--ease)}
+.opts{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.chip{min-height:46px;padding:10px 16px;border-radius:14px;background:var(--surface);font-weight:600;font-size:15px;text-align:left;transition:background .15s,color .15s,transform .15s}
+.chip:active{transform:scale(.97)}
+.chip[aria-pressed="true"]{background:var(--on);color:var(--on-ink)}
+.chip small{display:block;font-weight:500;font-size:12.5px;opacity:.65;margin-top:1px}
+.brands{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:18px}
+.brands .chip{min-height:64px;font-size:17px}
+.sub{font-size:13px;color:var(--muted);font-weight:600;margin-top:22px}
+.svcs{display:grid;gap:8px;margin-top:18px}
+.svcs .chip{display:flex;justify-content:space-between;align-items:center;gap:12px;width:100%}
+.svcs .chip span:last-child{font-weight:700;white-space:nowrap;font-size:14px}
+.est{margin-top:14px;padding:14px 16px;border-radius:16px;background:var(--surface);display:none}
+.est.on{display:block}
+.est b{font-size:20px;letter-spacing:-.02em}
+.est p{font-size:13px;color:var(--muted)}
+.days{display:flex;gap:8px;overflow-x:auto;margin:18px -16px 0;padding:0 16px 4px;scrollbar-width:none;scroll-snap-type:x mandatory}
+.days::-webkit-scrollbar{display:none}
+.day{flex:none;width:64px;height:76px;border-radius:16px;background:var(--surface);display:flex;flex-direction:column;align-items:center;justify-content:center;scroll-snap-align:start}
+.day small{font-size:12px;color:var(--muted);text-transform:uppercase;font-weight:600}
+.day b{font-size:22px;letter-spacing:-.02em}
+.day[aria-pressed="true"]{background:var(--on);color:var(--on-ink)}
+.day[aria-pressed="true"] small{color:inherit;opacity:.7}
+.times{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+.times .chip{text-align:center;justify-content:center}
+.times .chip:disabled{opacity:.3;text-decoration:line-through;cursor:default}
+.later{margin-top:14px;width:100%;min-height:48px;border-radius:14px;box-shadow:inset 0 0 0 1.5px var(--line);font-weight:600;font-size:15px}
+.later[aria-pressed="true"]{box-shadow:inset 0 0 0 2px var(--ink)}
+.field{position:relative;margin-top:10px}
+.field input,.field textarea{width:100%;height:58px;border:0;border-radius:16px;background:var(--surface);color:var(--ink);font:500 16px Manrope,sans-serif;padding:24px 16px 8px;outline:none;box-shadow:inset 0 0 0 1.5px transparent}
+.field textarea{height:90px;resize:none;padding-top:26px}
+.field input:focus,.field textarea:focus{box-shadow:inset 0 0 0 1.5px var(--ink)}
+.field label{position:absolute;left:16px;top:18px;color:var(--muted);pointer-events:none;transition:all .2s var(--ease)}
+.field input:focus+label,.field input:not(:placeholder-shown)+label,.field textarea:focus+label,.field textarea:not(:placeholder-shown)+label{top:8px;font-size:12px}
+.contact-btn{margin-top:10px;width:100%;min-height:52px;border-radius:16px;background:var(--surface);font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px}
+.contact-btn svg{width:18px;height:18px}
+.summary{margin-top:16px;background:var(--surface);border-radius:var(--r);padding:4px 16px}
+.summary div{display:flex;justify-content:space-between;gap:14px;padding:12px 0;border-bottom:1px solid var(--line);font-size:15px}
+.summary div:last-child{border:0}
+.summary span:first-child{color:var(--muted)}
+.summary span:last-child{text-align:right;font-weight:600}
+.agree{display:flex;gap:10px;font-size:13px;color:var(--muted);margin-top:14px;align-items:flex-start}
+.agree input{width:18px;height:18px;margin-top:1px;accent-color:var(--ink);flex:none}
+.err{color:var(--danger);font-size:14px;margin-top:10px;min-height:1px}
+.done{text-align:center;padding-top:40px}
+.done .ok{width:84px;height:84px;border-radius:50%;background:var(--on);color:var(--on-ink);display:grid;place-items:center;margin:0 auto 22px;animation:pop .6s var(--ease)}
+@keyframes pop{from{transform:scale(.6);opacity:0}}
+.done .ok svg{width:36px;height:36px}
+.done p{color:var(--muted);margin-top:10px}
+.card{background:var(--surface);border-radius:var(--r);padding:16px;margin-top:10px}
+.card .row{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.badge{font-size:12px;font-weight:700;padding:5px 10px;border-radius:999px;background:var(--chip);white-space:nowrap}
+.badge.confirmed{background:#dff3e8;color:var(--ok)}
+.badge.cancelled{background:#f7e1df;color:var(--danger)}
+:root[data-theme="dark"] .badge.confirmed{background:#163626}
+:root[data-theme="dark"] .badge.cancelled{background:#3a1c19}
+.card p{color:var(--muted);font-size:14px;margin-top:6px}
+.link{font-size:14px;font-weight:600;text-decoration:underline;text-underline-offset:3px;margin-top:10px;display:inline-block}
+.empty{text-align:center;color:var(--muted);padding:40px 10px}
+.list-row{display:flex;justify-content:space-between;gap:14px;padding:14px 0;border-bottom:1px solid var(--line);font-size:15px}
+.list-row span:last-child{font-weight:700;white-space:nowrap;text-align:right}
+.list-row small{display:block;font-weight:500;font-size:12px;color:var(--muted);white-space:normal;max-width:24ch;margin-left:auto}
+#s-prices .chip{min-height:40px;padding:8px 14px;font-size:14px}
+.map{border-radius:var(--r);overflow:hidden;height:240px;margin-top:10px;background:var(--surface)}
+.map iframe{width:100%;height:100%;border:0}
+.btns{display:grid;gap:8px;margin-top:10px}
+.btn2{min-height:52px;border-radius:16px;background:var(--surface);font-weight:600;display:flex;align-items:center;justify-content:center}
+/* своя нижняя кнопка вне Telegram */
+.dock{position:fixed;left:0;right:0;bottom:0;padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:linear-gradient(0deg,var(--bg) 70%,transparent);display:none}
+.dock.on{display:block}
+.dock button{width:100%;height:56px;border-radius:18px;background:var(--on);color:var(--on-ink);font-weight:700;font-size:17px}
+.dock button:disabled{opacity:.35}
+.tg .dock{display:none!important}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<!-- главная -->
+<section class="screen on" id="s-home">
+  <div class="hero">
+    <img class="bg" src="../img/hero.webp" alt="Цех Faraday Auto">
+    <img class="logo" src="../img/logo.webp" alt="Faraday Auto">
+    <p class="eyebrow">Санкт-Петербург</p>
+    <h1 id="hello">Сервис электромобилей и гибридов</h1>
+    <p>Li Auto, Zeekr, Voyah и другие марки из Китая, электромобили Audi, Mercedes-Benz, Porsche и Volkswagen. Грамотно, по умеренным ценам, с гарантией на работы.</p>
+    <div class="beam"></div>
+  </div>
+  <button class="big" data-go="car">Записаться на сервис
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+  <div class="tiles">
+    <button class="tile" data-go="my"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="5" width="16" height="16" rx="3"/><path d="M8 3v4M16 3v4M4 10h16"/></svg><span><b>Мои записи</b><small id="myCount">статус заявки</small></span></button>
+    <button class="tile" data-go="prices"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 12V4h8l8 8-8 8z"/><circle cx="8.5" cy="8.5" r="1.5"/></svg><span><b>Цены</b><small>по вашей модели</small></span></button>
+    <button class="tile" data-go="contacts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg><span><b>Адрес</b><small>пн-пт, 10:00 до 20:00</small></span></button>
+    <button class="tile" id="askBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 5h16v11H8l-4 4z"/></svg><span><b>Спросить</b><small>менеджер ответит в чате</small></span></button>
+  </div>
+  <div class="facts">
+    <div><span>Плановое ТО</span><span>от 4 500 ₽</span></div>
+    <div><span>Российская сим-карта</span><span>от 15 000 ₽</span></div>
+    <div><span>Диагностика</span><span>от 5 000 ₽</span></div>
+    <div><span>Авито: 86 отзывов</span><span>4,9</span></div>
+  </div>
+</section>
+
+<!-- 1 машина -->
+<section class="screen" id="s-car">
+  <div class="top"><button class="back" data-back aria-label="Назад"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></button><div class="prog"><i style="width:33%"></i></div></div>
+  <h2>Какая у вас машина?</h2><p class="hint">Модель можно не выбирать.</p>
+  <div class="brands" id="brands"></div>
+  <p class="sub" id="modelsLbl">Модель</p>
+  <div class="opts" id="models"></div>
+</section>
+
+<!-- 2 работы -->
+<section class="screen" id="s-svc">
+  <div class="top"><button class="back" data-back aria-label="Назад"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></button><div class="prog"><i style="width:66%"></i></div></div>
+  <h2>Что нужно сделать?</h2><p class="hint">Можно выбрать несколько пунктов.</p>
+  <div class="svcs" id="svcs"></div>
+  <div class="field"><textarea id="note" placeholder=" " maxlength="600"></textarea><label for="note">Что беспокоит (по желанию)</label></div>
+  <div class="est" id="est"></div>
+</section>
+
+<!-- 4 контакт -->
+<section class="screen" id="s-contact">
+  <div class="top"><button class="back" data-back aria-label="Назад"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></button><div class="prog"><i style="width:100%"></i></div></div>
+  <h2>Проверьте заявку</h2><p class="hint">Время визита менеджер согласует с вами по телефону.</p>
+  <div class="summary" id="summary"></div>
+  <div class="field"><input id="name" placeholder=" " autocomplete="name"><label for="name">Как к вам обращаться</label></div>
+  <div class="field"><input id="phone" type="tel" inputmode="tel" placeholder=" " autocomplete="tel"><label for="phone">Телефон</label></div>
+  <button class="contact-btn" id="shareContact" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>Поделиться номером из Telegram</button>
+  <label class="agree"><input type="checkbox" id="agree" checked><span>Соглашаюсь на обработку персональных данных ИП Цветков Павел Юрьевич (ИНН 784100748301), чтобы сервис мог связаться со мной по заявке. <button type="button" class="link" id="privBtn" style="font-size:inherit;margin:0;display:inline">Подробнее</button></span></label>
+  <div class="card" id="priv" hidden style="font-size:13px;line-height:1.5;margin-top:10px"><p style="margin:0 0 8px"><b>Кто обрабатывает данные:</b> ИП Цветков Павел Юрьевич, ИНН 784100748301, сервис Faraday Auto, Санкт-Петербург, Шафировский проспект, 10, корп. 3, стр. 3.</p><p style="margin:0 0 8px"><b>Какие данные:</b> имя, телефон, имя пользователя в Telegram, марка и модель машины, выбранные работы и комментарий.</p><p style="margin:0 0 8px"><b>Зачем:</b> чтобы связаться с вами, согласовать время визита и стоимость работ, напомнить о записи.</p><p style="margin:0">Данные не передаются третьим лицам и не используются для рассылок. Согласие действует до отзыва. Чтобы отозвать его или удалить данные, напишите менеджеру @Faradey_manager или позвоните +7 999 050-28-88.</p></div>
+  <p class="err" id="err"></p>
+</section>
+
+<!-- готово -->
+<section class="screen" id="s-done">
+  <div class="done">
+    <div class="ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+    <h2 id="doneTitle">Заявка принята</h2>
+    <p id="doneText">Менеджер свяжется с вами в рабочее время и согласует удобное время визита.</p>
+  </div>
+</section>
+
+<!-- мои записи -->
+<section class="screen" id="s-my">
+  <div class="top"><button class="back" data-back aria-label="Назад"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></button><h2>Мои записи</h2></div>
+  <div id="myList"></div>
+</section>
+
+<!-- цены -->
+<section class="screen" id="s-prices">
+  <div class="top"><button class="back" data-back aria-label="Назад"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></button><h2>Цены</h2></div>
+  <div class="opts" id="pBrands" style="margin-top:4px"></div>
+  <div class="opts" id="pModels" style="margin-top:10px"></div>
+  <div class="opts" id="pGroups" style="margin-top:10px"></div>
+  <div class="card" id="priceList" style="padding:4px 16px;margin-top:14px"></div>
+  <div class="card" id="priceOther" style="margin-top:14px;display:none"><p style="margin:0 0 12px;font-size:15px;line-height:1.45">Aito, Deepal, Qiyuan, Geely и другие машины из Китая, электромобили Audi, Mercedes-Benz, Porsche и Volkswagen. Стоимость и состав работ для вашей машины уточнит менеджер по телефону.</p><div class="btns" style="margin:0"><a class="btn2" href="tel:+79990502888">Позвонить +7 999 050-28-88</a><button class="btn2" data-link="https://t.me/Faradey_manager">Написать менеджеру в Telegram</button></div></div>
+  <p class="hint" style="font-size:13px;margin-top:12px">Цены в рублях. «От» означает минимальную стоимость. Итог мастер согласует после осмотра.</p>
+</section>
+
+<!-- контакты -->
+<section class="screen" id="s-contacts">
+  <div class="top"><button class="back" data-back aria-label="Назад"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></button><h2>Адрес и часы</h2></div>
+  <div class="card"><p style="margin:0">Адрес</p><b style="font-size:17px">Санкт-Петербург, Шафировский проспект, 10, корп. 3, стр. 3</b></div>
+  <div class="card"><p style="margin:0">Часы работы</p><b style="font-size:17px">Понедельник-пятница, с 10:00 до 20:00</b></div>
+  <div class="map" id="map"></div>
+  <div class="btns">
+    <button class="btn2" data-link="https://yandex.ru/maps/org/faraday_auto/122103537375/">Маршрут в Яндекс Картах</button>
+    <a class="btn2" href="tel:+79990502888">Позвонить +7 999 050-28-88</a>
+    <button class="btn2" data-link="https://t.me/Faradey_manager">Написать менеджеру в Telegram</button>
+  </div>
+</section>
+
+<div class="dock" id="dock"><button id="dockBtn">Дальше</button></div>
+
+<script src="../prices.js?v=4"></script>
+<script>
+const API = 'https://faraday-bot.v1-preview.workers.dev';
+const BOT = 'https://t.me/faradeycar_bot';
+const tg = window.Telegram?.WebApp; const tgUI = !!(tg && tg.platform && tg.platform !== 'unknown'); const inTg = !!(tgUI && tg.initData); const kbMode = tgUI && !inTg; // kbMode: открыто кнопкой клавиатуры, ответ через sendData
+const $ = (s) => document.querySelector(s); const $$ = (s) => [...document.querySelectorAll(s)];
+const fmt = (n) => n.toLocaleString('ru-RU').replace(/[   ]/g, ' ');
+const haptic = (t = 'light') => { try { tg?.HapticFeedback?.impactOccurred(t); } catch {} };
+
+const SVC_BASE = [
+  ['to', 'Плановое ТО', 'по регламенту'], ['oil', 'Замена масла в редукторах', ''], ['diag', 'Диагностика', 'ошибки и блоки электроники'], ['heater', 'Ремонт отопителя', ''],
+  ['sim', 'Российская сим-карта', 'без выпаивания чипа'], ['rus', 'Русификация и приложения', ''], ['apps', 'Установка приложений', ''], ['unlock', 'Снятие региональных ограничений', ''],
+  ['cnum', 'Китайский номер', 'WeChat и eSender'], ['keys', 'Пропись ключей', ''], ['lidar', 'Ремонт лидара', ''],
+  ['brakes', 'Тормоза', 'колодки и диски'], ['susp', 'Пневмоподвеска', ''], ['chassis', 'Ходовая часть', ''], ['paint', 'Кузовной ремонт', ''], ['armor', 'Защита днища', ''],
+];
+const MODEL_ID = {}; FA_PRICES.models.forEach((m) => { MODEL_ID[`${m.brand}|${m.name}`] = m.id; });
+const byBrand = (b) => FA_PRICES.models.filter((m) => m.brand === b).map((m) => m.name);
+const BRANDS = { 'Li Auto': byBrand('Li Auto'), 'Zeekr': [...byBrand('Zeekr'), '007', 'MIX'], 'Voyah': [...byBrand('Voyah'), 'Passion'], 'Avatr': byBrand('Avatr'), 'Другая': ['Aito', 'Deepal', 'Qiyuan', 'Geely', 'Seres', 'HiPhi', 'Lynk & Co', 'Lotus', 'M-Hero', 'ROX', 'Audi', 'Mercedes-Benz', 'Porsche', 'Volkswagen'] };
+const midOf = (b, m) => MODEL_ID[`${b}|${m}`] || '';
+// [id, название, цена, «от», подпись] с ценой по выбранной модели; работы, которых нет для модели, скрыты
+function svcList() {
+  const mid = midOf(S.brand, S.model);
+  const out = SVC_BASE.map(([id, n, sub]) => { const e = FA_EST(mid, id); return mid && !e ? null : [id, n, e ? e.p : 0, e ? e.from : true, e && e.part ? 'работа, деталь по факту' : sub]; }).filter(Boolean);
+  return [...out, ['other', 'Не знаю, нужна консультация', 0, true, '']];
+}
+let SVC = [];
+const S = { brand: '', model: '', svcs: new Set() }; // время клиент не выбирает: его назначает менеджер
+let stack = ['home'];
+
+/* тема: в Telegram как у пользователя, в браузере светлая */
+function theme() { document.documentElement.dataset.theme = tgUI && tg.colorScheme === 'dark' ? 'dark' : 'light'; if (tgUI) { const bg = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim(); try { tg.setHeaderColor(bg); tg.setBackgroundColor(bg); tg.setBottomBarColor?.(bg); } catch {} } }
+if (tgUI) { document.body.classList.add('tg'); tg.ready(); tg.expand(); try { tg.disableVerticalSwipes?.(); } catch {} tg.onEvent('themeChanged', theme); const u = tg.initDataUnsafe?.user; if (u?.first_name) { $('#hello').textContent = `${u.first_name}, запишем вашу машину`; $('#name').value = [u.first_name, u.last_name].filter(Boolean).join(' '); } }
+theme();
+
+/* навигация */
+function show(id, push = true) {
+  $$('.screen').forEach((s) => s.classList.toggle('on', s.id === `s-${id}`));
+  if (push && stack.at(-1) !== id) stack.push(id);
+  scrollTo(0, 0); updateMain();
+  if (tgUI) { stack.length > 1 && id !== 'done' ? tg.BackButton.show() : tg.BackButton.hide(); }
+  if (id === 'my') loadMy(); if (id === 'contacts' && !$('#map').innerHTML) $('#map').innerHTML = '<iframe src="https://yandex.ru/map-widget/v1/?ll=30.447013%2C59.99166&mode=search&oid=122103537375&ol=biz&z=16" title="Карта"></iframe>';
+  if (id === 'contact') renderSummary();
+}
+function back() { if (stack.length > 1) { stack.pop(); show(stack.at(-1), false); haptic(); } }
+$$('[data-back]').forEach((b) => b.addEventListener('click', back));
+if (tgUI) tg.BackButton.onClick(back);
+document.addEventListener('click', (e) => { const g = e.target.closest('[data-go]'); if (g) { haptic(); show(g.dataset.go); } const l = e.target.closest('[data-link]'); if (l) { const u = l.dataset.link; tgUI ? (u.startsWith('https://t.me/') ? tg.openTelegramLink(u) : tg.openLink(u)) : open(u, '_blank'); } });
+$('#askBtn').addEventListener('click', () => { haptic(); tgUI ? tg.close() : open(BOT, '_blank'); });
+
+/* главная кнопка: в Telegram MainButton, в браузере своя */
+const MAIN = {
+  car: ['Дальше', () => !!S.brand, () => show('svc')],
+  svc: ['Дальше', () => S.svcs.size > 0, () => show('contact')],
+  contact: ['Отправить заявку', () => true, submit],
+  done: ['Готово', () => true, () => (tgUI ? tg.close() : (stack = ['home'], show('home', false)))],
+  my: ['Новая запись', () => true, () => { reset(); show('car'); }],
+  prices: ['Записаться', () => true, () => show('car')],
+  contacts: ['Записаться', () => true, () => show('car')],
+};
+let mainHandler = null;
+function updateMain() {
+  const id = stack.at(-1); const m = MAIN[id];
+  if (tgUI) {
+    if (mainHandler) tg.MainButton.offClick(mainHandler);
+    if (!m) { tg.MainButton.hide(); return; }
+    mainHandler = () => { haptic('medium'); m[2](); };
+    tg.MainButton.setParams({ text: m[0], is_visible: true, is_active: m[1](), color: getComputedStyle(document.documentElement).getPropertyValue('--on').trim(), text_color: getComputedStyle(document.documentElement).getPropertyValue('--on-ink').trim() });
+    tg.MainButton.onClick(mainHandler);
+  } else {
+    $('#dock').classList.toggle('on', !!m); if (!m) return;
+    $('#dockBtn').textContent = m[0]; $('#dockBtn').disabled = !m[1](); $('#dockBtn').onclick = () => m[2]();
+  }
+}
+
+/* шаг 1 */
+function renderCar() {
+  $('#brands').innerHTML = Object.keys(BRANDS).map((b) => `<button class="chip" aria-pressed="${b === S.brand}" data-b="${b}">${b === 'Другая' ? 'Другая марка' : b}</button>`).join('');
+  const ms = S.brand ? BRANDS[S.brand] : []; $('#modelsLbl').style.display = ms.length ? '' : 'none';
+  $('#models').innerHTML = ms.map((m) => `<button class="chip" aria-pressed="${m === S.model}" data-m="${m}">${m}</button>`).join('');
+  renderSvc();
+}
+$('#brands').addEventListener('click', (e) => { const b = e.target.closest('[data-b]'); if (!b) return; haptic(); S.brand = b.dataset.b; S.model = ''; renderCar(); });
+$('#models').addEventListener('click', (e) => { const b = e.target.closest('[data-m]'); if (!b) return; haptic(); S.model = S.model === b.dataset.m ? '' : b.dataset.m; renderCar(); });
+
+/* шаг 2 */
+function renderSvc() {
+  SVC = svcList(); S.svcs.forEach((id) => { if (!SVC.some((x) => x[0] === id)) S.svcs.delete(id); });
+  $('#svcs').innerHTML = SVC.map(([id, n, p, from, sub]) => `<button class="chip" aria-pressed="${S.svcs.has(id)}" data-s="${id}"><span>${n}${sub ? `<small>${sub}</small>` : ''}</span><span>${p ? (from ? 'от ' : '') + fmt(p) + ' ₽' : ''}</span></button>`).join('');
+  const sel = SVC.filter((s) => S.svcs.has(s[0])); const priced = sel.filter((s) => s[2]);
+  if (priced.length) { const sum = priced.reduce((a, s) => a + s[2], 0); $('#est').innerHTML = `<b>${priced.some((s) => s[3]) || priced.length < sel.length ? 'от ' : ''}${fmt(sum)} ₽</b><p>Ориентир по выбранным работам, итог после осмотра.</p>`; $('#est').classList.add('on'); }
+  else $('#est').classList.remove('on');
+  updateMain();
+}
+$('#svcs').addEventListener('click', (e) => { const b = e.target.closest('[data-s]'); if (!b) return; haptic(); const id = b.dataset.s; S.svcs.has(id) ? S.svcs.delete(id) : S.svcs.add(id); renderSvc(); });
+
+/* шаг 3 */
+function renderSummary() {
+  const names = SVC.filter((s) => S.svcs.has(s[0])).map((s) => s[1]).join(', ');
+  $('#summary').innerHTML = `<div><span>Машина</span><span>${S.brand === 'Другая' ? (S.model || 'другая марка') : `${S.brand} ${S.model}`.trim()}</span></div><div><span>Работы</span><span>${names}</span></div><div><span>Время</span><span>согласует менеджер</span></div>`;
+  $('#shareContact').hidden = !(tgUI && tg.requestContact);
+}
+$('#shareContact').addEventListener('click', () => {
+  tg.requestContact((ok, res) => {
+    const p = res?.responseUnsafe?.contact?.phone_number; if (ok && p) { $('#phone').value = p.startsWith('+') ? p : `+${p}`; $('#err').textContent = ''; }
+    else if (ok) $('#err').textContent = 'Номер отправлен в чат. Можно ввести его и здесь.';
+  });
+});
+function mask(el) { el.addEventListener('input', () => { let d = el.value.replace(/\D/g, ''); if (!d) { el.value = ''; return; } if (d[0] === '8') d = '7' + d.slice(1); if (d[0] !== '7') d = '7' + d; d = d.slice(0, 11); const p = [d.slice(1, 4), d.slice(4, 7), d.slice(7, 9), d.slice(9, 11)]; el.value = '+7' + (p[0] ? ` ${p[0]}` : '') + (p[1] ? ` ${p[1]}` : '') + (p[2] ? `-${p[2]}` : '') + (p[3] ? `-${p[3]}` : ''); }); }
+mask($('#phone'));
+$('#privBtn').addEventListener('click', (e) => { e.preventDefault(); $('#priv').hidden = !$('#priv').hidden; });
+
+let sending = false;
+async function submit() {
+  if (sending) return; const err = $('#err'); err.textContent = '';
+  const phone = $('#phone').value.trim();
+  if (!tgUI && phone.replace(/\D/g, '').length < 11) { err.textContent = 'Укажите телефон: нужно 11 цифр.'; $('#phone').focus(); return; }
+  if (tgUI && phone && phone.replace(/\D/g, '').length < 11) { err.textContent = 'Проверьте номер: нужно 11 цифр.'; return; }
+  if (!$('#agree').checked) { err.textContent = 'Нужно согласие на обработку данных.'; return; }
+  const payload = { name: $('#name').value, phone, brand: S.brand === 'Другая' ? 'Другая марка' : S.brand, model: S.model, services: [...S.svcs], note: $('#note').value.slice(0, 600) };
+  if (kbMode) { try { tg?.HapticFeedback?.notificationOccurred('success'); } catch {} tg.sendData(JSON.stringify(payload)); return; } // Telegram закроет приложение, бот ответит в чате
+  sending = true; if (tgUI) tg.MainButton.showProgress(); else { $('#dockBtn').disabled = true; $('#dockBtn').textContent = 'Отправляем…'; }
+  try {
+    const r = await fetch(`${API}/api/book`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ initData: inTg ? tg.initData : '', ...payload }) });
+    const j = await r.json().catch(() => ({}));
+    if (j.ok) {
+      try { tg?.HapticFeedback?.notificationOccurred('success'); } catch {}
+      $('#doneTitle').textContent = `Заявка #${j.id} принята`;
+      $('#doneText').textContent = `Менеджер позвонит вам в рабочее время, пн-пт с 10:00 до 20:00, и согласует удобное время визита.${inTg ? ' Подтверждение придёт в чат с ботом.' : ''}`;
+      stack = ['home', 'done']; show('done', false);
+    }
+    else if (j.error === 'phone') err.textContent = 'Укажите телефон: нужно 11 цифр.';
+    else throw new Error(j.error || 'send');
+  } catch { err.innerHTML = 'Не получилось отправить. Позвоните <a href="tel:+79990502888" style="text-decoration:underline">+7 999 050-28-88</a> или напишите боту.'; }
+  sending = false; if (tgUI) tg.MainButton.hideProgress(); updateMain();
+}
+function reset() { S.brand = ''; S.model = ''; S.svcs.clear(); renderCar(); renderSvc(); }
+
+/* мои записи */
+const ST = { new: ['ждёт подтверждения', ''], confirmed: ['подтверждена', 'confirmed'], move: ['согласуем время', ''], cancelled: ['отменена', 'cancelled'], done: ['выполнена', ''] };
+async function loadMy() {
+  const el = $('#myList');
+  if (kbMode) { el.innerHTML = '<div class="empty">Нажмите «Мои записи» в меню бота, и он пришлёт список в чат.</div>'; return; }
+  if (!inTg) { el.innerHTML = `<div class="empty">Записи видны, когда приложение открыто из Telegram.<br><a class="link" href="${BOT}" target="_blank" rel="noopener">Открыть бота</a></div>`; return; }
+  el.innerHTML = '<div class="empty">Загружаем…</div>';
+  try {
+    const { items } = await (await fetch(`${API}/api/my`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ initData: tg.initData }) })).json();
+    $('#myCount').textContent = items.filter((b) => ['new', 'confirmed', 'move'].includes(b.status)).length ? `активных: ${items.filter((b) => ['new', 'confirmed', 'move'].includes(b.status)).length}` : 'статус заявки';
+    el.innerHTML = items.length ? items.map((b) => `<div class="card"><div class="row"><b>#${b.id} · ${b.brand || ''} ${b.model || ''}</b><span class="badge ${ST[b.status]?.[1] || ''}">${ST[b.status]?.[0] || b.status}</span></div><p>${b.when || (b.status === 'confirmed' ? 'время согласовано с менеджером' : 'время согласует менеджер')}${b.services ? `<br>${b.services}` : ''}</p>${['new', 'confirmed', 'move'].includes(b.status) ? `<button class="link" data-cancel="${b.id}">Отменить запись</button>` : ''}</div>`).join('') : '<div class="empty">Записей пока нет.</div>';
+  } catch { el.innerHTML = '<div class="empty">Не получилось загрузить. Попробуйте позже.</div>'; }
+}
+$('#myList').addEventListener('click', (e) => {
+  const b = e.target.closest('[data-cancel]'); if (!b) return;
+  const go = async () => { await fetch(`${API}/api/cancel`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ initData: tg.initData, id: Number(b.dataset.cancel) }) }).catch(() => {}); loadMy(); };
+  tg.showConfirm('Отменить эту запись?', (ok) => ok && go());
+});
+
+/* цены: марка, модель, вид работ */
+const PS = { b: 'Li Auto', m: 'L9', g: 'ТО' };
+function renderPrices() {
+  const chip = (attr, v, on, label) => `<button class="chip" aria-pressed="${on}" data-${attr}="${v}">${label || v}</button>`;
+  $('#pBrands').innerHTML = ['Li Auto', 'Zeekr', 'Voyah', 'Avatr', 'Другая'].map((b) => chip('pb', b, b === PS.b, b === 'Другая' ? 'Другая марка' : '')).join('');
+  const other = PS.b === 'Другая'; ['pModels', 'pGroups', 'priceList'].forEach((id) => { $('#' + id).style.display = other ? 'none' : ''; }); $('#priceOther').style.display = other ? '' : 'none';
+  if (other) return;
+  $('#pModels').innerHTML = byBrand(PS.b).map((m) => chip('pm', m, m === PS.m)).join('');
+  const list = FA_LIST(midOf(PS.b, PS.m)); const gs = ['ТО', 'Электроника', 'Ходовая и кузов'].filter((g) => list.some((r) => r.g === g));
+  if (!gs.includes(PS.g)) PS.g = gs[0];
+  $('#pGroups').innerHTML = gs.map((g) => chip('pg', g, g === PS.g)).join('');
+  $('#priceList').innerHTML = list.filter((r) => r.g === PS.g).map((r) => { const i = r.t.indexOf(': '); return `<div class="list-row"><span>${r.n}</span><span>${i > 0 ? r.t.slice(0, i) : r.t}${i > 0 ? `<small>${r.t.slice(i + 2)}</small>` : ''}</span></div>`; }).join('').replace(/(<div class="list-row">)(?![\s\S]*<div class="list-row">)/, '<div class="list-row" style="border:0">');
+}
+$('#s-prices').addEventListener('click', (e) => { const t = e.target.closest('[data-pb],[data-pm],[data-pg]'); if (!t) return; haptic(); if (t.dataset.pb) { PS.b = t.dataset.pb; PS.m = byBrand(PS.b)[0] || ''; } if (t.dataset.pm) PS.m = t.dataset.pm; if (t.dataset.pg) PS.g = t.dataset.pg; renderPrices(); });
+renderPrices();
+
+renderCar(); renderSvc(); updateMain();
+if (inTg && tg.initDataUnsafe?.start_param === 'book') show('car');
+if (inTg) loadMyCount();
+async function loadMyCount() { try { const { items } = await (await fetch(`${API}/api/my`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ initData: tg.initData }) })).json(); const n = items.filter((b) => ['new', 'confirmed', 'move'].includes(b.status)).length; if (n) $('#myCount').textContent = `активных: ${n}`; } catch {} }
+</script>
+</body>
+</html>
