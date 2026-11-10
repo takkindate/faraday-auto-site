@@ -801,6 +801,8 @@ function renderPicker() {
 $('#brandTabs').addEventListener('click', (e) => { const b = e.target.closest('[data-b]'); if (!b) return; pBrand = b.dataset.b; pModel = pBrand === 'Другая марка' ? '' : BRANDS[pBrand].models[0]; renderPicker(); });
 $('#modelChips').addEventListener('click', (e) => { const b = e.target.closest('[data-m]'); if (!b) return; pModel = b.dataset.m; renderPicker(); });
 $('#pickOut').addEventListener('click', (e) => { const b = e.target.closest('[data-g2]'); if (!b) return; pGroup = b.dataset.g2; renderPicker(); });
+/* марка из ссылки рекламы: ?brand=li|zeekr|voyah|avatr */
+{ const qb = { li: 'Li Auto', zeekr: 'Zeekr', voyah: 'Voyah', avatr: 'Avatr', other: 'Другая марка' }[(new URLSearchParams(location.search).get('brand') || '').toLowerCase()]; if (qb) { pBrand = qb; pModel = qb === 'Другая марка' ? '' : BRANDS[qb].models[0]; } }
 renderPicker();
 
 /* окна */
