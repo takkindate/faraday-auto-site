@@ -679,6 +679,22 @@ dialog[open] .lb img{transform:none;opacity:1}
   </div>
 </dialog>
 
+<script>
+/* Яндекс Метрика: номер счётчика клиента вписать в FA_YM. Работает только на faraday-auto.ru, на превью не считает.
+   Цели (JavaScript-события): lead (форма и квиз), tel (клик по телефону), telegram (бот или менеджер в Telegram). */
+window.FA_YM = 0;
+(function () {
+  if (!window.FA_YM || location.hostname.replace(/^www\./, '') !== 'faraday-auto.ru') return;
+  (function (m, e, t, r, i, k, a) { m[i] = m[i] || function () { (m[i].a = m[i].a || []).push(arguments) }; m[i].l = 1 * new Date(); k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a) })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js', 'ym');
+  ym(window.FA_YM, 'init', { clickmap: true, trackLinks: true, accurateTrackBounce: true, webvisor: true });
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href]'); if (!a) return;
+    var h = a.getAttribute('href');
+    if (h.indexOf('tel:') === 0) ym(window.FA_YM, 'reachGoal', 'tel');
+    else if (h.indexOf('https://t.me/Faradey_manager') === 0 || h.indexOf('https://t.me/faradeycar_bot') === 0) ym(window.FA_YM, 'reachGoal', 'telegram');
+  }, true);
+})();
+</script>
 <script src="prices.js?v=4"></script>
 <script>
 const LEAD_URL = 'https://faraday-bot.v1-preview.workers.dev/api/lead';
@@ -912,7 +928,7 @@ async function sendLead(type, fields, text) {
   try {
     const r = await fetch(LEAD_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type, fields, text: `${text}\n\nСтраница: ${page}` }) });
     const j = await r.json().catch(() => ({}));
-    if (r.ok && j.ok) { try { localStorage.setItem('fa-lead', String(Date.now())); } catch {} if (window.ym) try { ym(0, 'reachGoal', 'lead'); } catch {} return true; }
+    if (r.ok && j.ok) { try { localStorage.setItem('fa-lead', String(Date.now())); } catch {} if (window.ym && window.FA_YM) try { ym(window.FA_YM, 'reachGoal', 'lead'); } catch {} return true; }
   } catch {}
   return false;
 }
