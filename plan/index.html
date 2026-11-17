@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Faraday Auto · план заявок</title>
+<meta name="description" content="Разбор карточки Faraday Auto на Яндекс Картах и план, как получать больше заявок на сервис.">
+<link rel="icon" href="../img/logo.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Jost:wght@300&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3f3f0;--surface:#fff;--ink:#0c0d0e;--muted:#62666c;--line:#e0e0db;--chip:#eeeeea;--good:#1f8a4c;--warn:#b5651d;--bad:#c0392b;--r:24px;--shadow:0 1px 2px rgba(12,13,14,.04),0 14px 44px -20px rgba(12,13,14,.2);color-scheme:light}
+:root[data-theme="dark"]{--bg:#0b0c0d;--surface:#15171a;--ink:#f1f1ee;--muted:#9a9ea4;--line:#25282c;--chip:#1d2023;--good:#4cc27e;--warn:#e7a35a;--bad:#ef6f61;--shadow:0 20px 50px -20px rgba(0,0,0,.6);color-scheme:dark}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.55 Manrope,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+img{display:block;max-width:100%}
+.wrap{max-width:1100px;margin:0 auto;padding:0 clamp(16px,4vw,40px)}
+.eyebrow{font:300 13px/1.2 Jost,sans-serif;letter-spacing:.26em;text-transform:uppercase;color:var(--muted)}
+h1{font-size:clamp(34px,5.6vw,72px);line-height:1;letter-spacing:-.035em;font-weight:700}
+h2{font-size:clamp(24px,3.2vw,36px);line-height:1.1;letter-spacing:-.025em;font-weight:700}
+h3{font-size:18px;line-height:1.3;font-weight:700}
+.lead{color:var(--muted);font-size:clamp(16px,1.5vw,18px);max-width:62ch}
+.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:12px;height:64px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:700;margin-right:auto;text-decoration:none}
+.brand img{width:34px;height:34px;border-radius:50%}
+.icon{width:40px;height:40px;border-radius:50%;display:grid;place-items:center}
+.icon:hover{background:var(--chip)}
+.icon svg{width:20px;height:20px}
+.hero{padding:clamp(44px,7vw,96px) 0 clamp(24px,4vw,40px)}
+.hero .lead{margin-top:20px}
+.sec{padding:clamp(28px,4vw,48px) 0}
+.sec>.lead{margin-top:12px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:24px}
+.stat{background:var(--surface);border-radius:20px;padding:20px;box-shadow:var(--shadow)}
+.stat b{display:block;font-size:clamp(28px,3.4vw,40px);letter-spacing:-.03em;line-height:1}
+.stat span{display:block;color:var(--muted);font-size:14px;margin-top:8px}
+@media (max-width:820px){.stats{grid-template-columns:repeat(2,1fr)}}
+.tbl{margin-top:22px;background:var(--surface);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden}
+.tbl table{width:100%;border-collapse:collapse;font-size:15px}
+.tbl th,.tbl td{text-align:left;padding:14px 18px;border-bottom:1px solid var(--line);vertical-align:top}
+.tbl th{font-weight:600;color:var(--muted);font-size:13px}
+.tbl tr:last-child td{border-bottom:0}
+.tbl tr.us td{background:color-mix(in srgb,var(--warn) 10%,transparent);font-weight:600}
+.tbl .scroll{overflow-x:auto}
+.list{display:grid;gap:12px;margin-top:22px}
+.item{background:var(--surface);border-radius:20px;padding:22px 24px;box-shadow:var(--shadow);display:grid;grid-template-columns:auto 1fr;gap:16px}
+.tag{font-size:12px;font-weight:700;letter-spacing:.04em;padding:5px 10px;border-radius:999px;height:fit-content;white-space:nowrap}
+.tag.bad{color:var(--bad);background:color-mix(in srgb,var(--bad) 14%,transparent)}
+.tag.warn{color:var(--warn);background:color-mix(in srgb,var(--warn) 14%,transparent)}
+.tag.good{color:var(--good);background:color-mix(in srgb,var(--good) 14%,transparent)}
+.item p{color:var(--muted);margin-top:6px;font-size:15px}
+.item ul{margin:10px 0 0 18px;color:var(--muted);font-size:15px;display:grid;gap:4px}
+@media (max-width:560px){.item{grid-template-columns:1fr;gap:10px}}
+.weeks{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:22px}
+.week{background:var(--surface);border-radius:20px;padding:24px;box-shadow:var(--shadow)}
+.week .eyebrow{margin-bottom:10px}
+.week ul{margin:12px 0 0 18px;display:grid;gap:6px;font-size:15px}
+.week li span{color:var(--muted)}
+@media (max-width:820px){.weeks{grid-template-columns:1fr}}
+.note{margin-top:16px;color:var(--muted);font-size:14px}
+.foot{border-top:1px solid var(--line);margin-top:40px;padding:28px 0;color:var(--muted);font-size:14px}
+.foot .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../dashboard/"><img src="../img/logo.webp" alt="">Faraday Auto</a>
+    <button class="icon" id="themeBtn" aria-label="Сменить тему"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <p class="eyebrow">Ноябрь 2026 · Санкт-Петербург</p>
+    <h1 style="margin-top:18px">Яндекс Карты и план заявок</h1>
+    <p class="lead">Директ уже приносит заявки и звонки. Следующий большой источник заявок для вас Яндекс Карты: туда люди приходят искать сервис своей марки рядом с домом. Ниже разбор карточки, сравнение с соседями по выдаче и план по неделям.</p>
+  </section>
+
+  <section class="sec">
+    <p class="eyebrow">Где вы сейчас</p>
+    <h2 style="margin-top:12px">Цифры на сегодня</h2>
+    <div class="stats">
+      <div class="stat"><b>3</b><span>заявки из Директа за первые дни</span></div>
+      <div class="stat"><b>5</b><span>звонков в Метрике</span></div>
+      <div class="stat"><b>2</b><span>отзыва на Яндекс Картах</span></div>
+      <div class="stat"><b>86</b><span>отзывов на Авито, оценка 4,9</span></div>
+    </div>
+    <p class="note">Звонков пять, а кликов по номеру на сайте один. Значит, большинство людей звонят прямо из объявления, не заходя на сайт: номер берётся из организации, привязанной к рекламе. Это нормально, такие звонки тоже из Директа.</p>
+  </section>
+
+  <section class="sec">
+    <p class="eyebrow">Выдача Карт по запросу «сервис Li Auto»</p>
+    <h2 style="margin-top:12px">Соседи по выдаче</h2>
+    <p class="lead">Карты ставят выше тех, у кого больше оценок, свежие услуги и фото. По этому запросу Faraday Auto пока нет на первой странице.</p>
+    <div class="tbl"><div class="scroll"><table>
+      <tr><th>Сервис</th><th>Оценка</th><th>Оценок</th><th>Чем цепляет</th></tr>
+      <tr><td>Li Auto Std</td><td>5,0</td><td>280</td><td>87 фото, цены в карточке</td></tr>
+      <tr><td>Major Li Auto Олимп</td><td>5,0</td><td>88</td><td>Дилер, акция в карточке</td></tr>
+      <tr><td>Lrs-авто</td><td>5,0</td><td>51</td><td>Знак «Хорошее место 2026», скидка 20% на первое обслуживание</td></tr>
+      <tr><td>Точка Сервиса</td><td>4,9</td><td>32</td><td>Цены, 30 фото</td></tr>
+      <tr class="us"><td>Faraday Auto</td><td>нет</td><td>2</td><td>11 фото, 3 услуги, «давно не обновлялось»</td></tr>
+    </table></div></div>
+    <p class="note">У вас 86 отзывов на Авито при 2 на Картах. Доверие клиентов уже есть, его просто не видно там, где ищут сервис.</p>
+  </section>
+
+  <section class="sec">
+    <p class="eyebrow">Карточка Faraday Auto</p>
+    <h2 style="margin-top:12px">Что поправить в первую очередь</h2>
+    <div class="list">
+      <div class="item"><span class="tag bad">Главное</span><div><h3>Отзывы: с 2 до 30 за месяц</h3>
+        <ul>
+          <li>Табличка с QR-кодом на отзыв на стойке приёмки и в зоне выдачи</li>
+          <li>После выдачи машины менеджер нажимает в боте «Машина выдана», бот сам попросит клиента оставить отзыв на Картах</li>
+          <li>Постоянным клиентам с Авито короткое сообщение с той же просьбой и ссылкой</li>
+          <li>Отвечать на каждый отзыв в течение дня, Карты это учитывают</li>
+        </ul></div></div>
+      <div class="item"><span class="tag bad">Важно</span><div><h3>Товары и услуги: сейчас 3 позиции и пометка «давно не обновлялось»</h3>
+        <p>В описаниях услуг русские буквы перемешаны с латинскими, например «Пpoфeccиoнaльный». Поиск Карт не узнаёт такие слова, и выглядит это как спам. Тексты лучше набрать заново обычными буквами.</p>
+        <ul>
+          <li>Добавить 20-30 услуг из вашего прайса с ценами и фото: ТО Li Auto, Zeekr, Voyah, Avatr, пневмоподвеска от 28 000 ₽, ремонт лидара от 25 000 ₽, снятие региональных ограничений от 25 000 ₽, русификация Voyah от 8 000 ₽, установка приложений от 10 000 ₽, ремонт отопителя от 25 000 ₽, замена масла в редукторах от 12 300 ₽, пропись ключей от 15 000 ₽, диагностика от 5 000 ₽</li>
+          <li>Цена ТО Zeekr: на Картах 7 000 ₽, на сайте от 9 000 ₽. Нужна одна цена везде</li>
+        </ul></div></div>
+      <div class="item"><span class="tag warn">Рубрики</span><div><h3>Главной рубрикой поставить «Автосервис, автотехцентр»</h3>
+        <p>Сейчас главная рубрика «Электромобили, продажа и сервис». По ней приходят и те, кто хочет купить машину. Её стоит оставить дополнительной вместе с «Ремонт автоэлектрики».</p>
+        <ul>
+          <li>Проверить список работ и марок: оставить только то, что вы действительно делаете. В карточке, например, указаны ремонт по ОСАГО, кузовной ремонт, Lotus и HiPhi</li>
+        </ul></div></div>
+      <div class="item"><span class="tag warn">Фото</span><div><h3>С 11 до 30 и больше</h3>
+        <ul>
+          <li>Въезд и вывеска, чтобы клиент сразу нашёл вас на Шафировском</li>
+          <li>Цех, подъёмники, машины Li Auto, Zeekr, Voyah, Avatr в работе</li>
+          <li>Мастера за работой и зона ожидания</li>
+          <li>На обложку цех с машиной клиента</li>
+        </ul></div></div>
+      <div class="item"><span class="tag warn">Оформление</span><div><h3>Название, описание, кнопки</h3>
+        <ul>
+          <li>Название «Faraday Auto», как на сайте и логотипе. Сейчас «Faraday auto»</li>
+          <li>Описание организации в 2-3 предложения: какие марки, какие работы, что цену называете до начала работ, что машины без гарантии дилера обслуживаете</li>
+          <li>Кнопка действия «Записаться» со ссылкой на сайт faraday-auto.ru или на бота</li>
+          <li>Публикации в карточке раз в неделю: работа недели с фото, свежая акция</li>
+        </ul></div></div>
+      <div class="item"><span class="tag good">Уже хорошо</span><div><h3>Сайт, телефон, часы, оплата, удобства</h3>
+        <p>Сайт faraday-auto.ru, номер +7 999 050-28-88, часы работы, способы оплаты, парковка и доступная среда заполнены. Владелец следит за карточкой, это видно посетителям.</p></div></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <p class="eyebrow">План по неделям</p>
+    <h2 style="margin-top:12px">Как наращивать заявки</h2>
+    <div class="weeks">
+      <div class="week"><p class="eyebrow">Неделя 1</p><h3>Карточка и учёт</h3><ul>
+        <li>Карты: услуги с ценами, рубрики, описание, 20 новых фото <span>(разделы выше)</span></li>
+        <li>QR-код на отзыв на стойке, первые отзывы от постоянных клиентов</li>
+        <li>Метрика: цель «Клик по телефону» перевести на точное совпадение, чтобы она не считала переходы в Telegram</li>
+        <li>Директ: каждые 2-3 дня смотреть запросы и дописывать минус-слова</li>
+        <li>Менеджер спрашивает каждого клиента, откуда он о вас узнал</li>
+      </ul></div>
+      <div class="week"><p class="eyebrow">Неделя 2</p><h3>Новые бесплатные площадки</h3><ul>
+        <li>2ГИС: карточка с теми же услугами, ценами и фото</li>
+        <li>Авито: отдельные объявления по маркам и работам (ТО Li Auto, пневмоподвеска, русификация Voyah)</li>
+        <li>Сайт: заметная кнопка «Оставить заявку» на первом экране и внизу на телефоне</li>
+        <li>Старый адрес в Telegram-каналах заменить на Шафировский проспект, 10</li>
+      </ul></div>
+      <div class="week"><p class="eyebrow">Недели 3-4</p><h3>Директ учится на заявках</h3><ul>
+        <li>Кампании, где набралось около 10 заявок в неделю, перевести на стратегию «Максимум конверсий»</li>
+        <li>Ретаргетинг: показывать рекламу тем, кто был на сайте и не оставил заявку</li>
+        <li>Отдельные объявления по дорогим работам: лидар, пневмоподвеска, снятие ограничений, отопитель</li>
+        <li>Деньги переносить в марки, где заявка дешевле</li>
+      </ul></div>
+      <div class="week"><p class="eyebrow">Месяц 2</p><h3>Расширение</h3><ul>
+        <li>Платное продвижение на Картах, когда в карточке будет 20-30 отзывов. Раньше деньги уйдут хуже</li>
+        <li>Новые марки в рекламе: Aito, Deepal, Qiyuan, электромобили Audi, Mercedes-Benz, Porsche, Volkswagen</li>
+        <li>Сообщества владельцев Li Auto, Zeekr, Voyah в Telegram и ВКонтакте</li>
+        <li>Договорённость с продавцами машин параллельного импорта: их покупателям скидка на первое ТО у вас</li>
+        <li>Бот уже напоминает клиентам о ТО через 6 месяцев, это повторные заявки без рекламы</li>
+      </ul></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <p class="eyebrow">Чтобы считать</p>
+    <h2 style="margin-top:12px">Раз в неделю одна таблица</h2>
+    <p class="lead">Сколько заявок и звонков дал каждый источник: Директ, Карты, Авито, 2ГИС, сайт, бот, сарафан. И сколько стоила заявка из рекламы. Тогда понятно, куда добавлять деньги, а что выключить.</p>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap"><span><b>катакана lab</b> · сайты, боты и реклама</span><span>Faraday Auto · Шафировский проспект, 10, корп. 3, стр. 3</span></div>
+</footer>
+
+<script>
+(() => {
+  const r = document.documentElement; let t = 'dark';
+  try { t = localStorage.getItem('fa-plan-theme') || 'dark'; } catch {}
+  r.dataset.theme = t;
+  document.getElementById('themeBtn').addEventListener('click', () => { t = r.dataset.theme === 'dark' ? 'light' : 'dark'; r.dataset.theme = t; try { localStorage.setItem('fa-plan-theme', t); } catch {} });
+})();
+</script>
+</body>
+</html>
